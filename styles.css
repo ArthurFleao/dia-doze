@@ -285,7 +285,7 @@ section {
 
 .photo-item img {
     width: 100%;
-    height: 250px;
+    height: 575px;
     object-fit: cover;
     transition: all 0.3s ease;
 }
@@ -333,6 +333,39 @@ section {
     }
 }
 
+/* Beijos Gallery */
+.beijos-gallery {
+    background: linear-gradient(135deg, rgba(255, 20, 147, 0.2), rgba(255, 105, 180, 0.2));
+    backdrop-filter: blur(10px);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.beijos-item {
+    border: 2px solid rgba(255, 20, 147, 0.3);
+}
+
+.beijos-item:hover {
+    border-color: rgba(255, 20, 147, 0.6);
+    transform: translateY(-15px) scale(1.08);
+    box-shadow: 0 25px 50px rgba(255, 20, 147, 0.4);
+}
+
+.beijos-overlay {
+    background: linear-gradient(45deg, rgba(255, 20, 147, 0.85), rgba(255, 105, 180, 0.85));
+}
+
+.beijos-item .photo-hearts {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 /* Love Counter */
 .love-counter {
     background: rgba(255, 255, 255, 0.1);
@@ -341,22 +374,28 @@ section {
 
 .counter-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
     margin-top: 50px;
 }
 
 .counter-item {
     text-align: center;
-    padding: 30px;
+    padding: 25px;
     background: rgba(255, 255, 255, 0.15);
     border-radius: 20px;
     transition: all 0.3s ease;
     animation: counterFloat 3s ease-in-out infinite;
 }
 
-.counter-item:nth-child(2) { animation-delay: 1s; }
-.counter-item:nth-child(3) { animation-delay: 2s; }
+.counter-item:nth-child(1) { animation-delay: 0s; }
+.counter-item:nth-child(2) { animation-delay: 0.5s; }
+.counter-item:nth-child(3) { animation-delay: 1s; }
+.counter-item:nth-child(4) { animation-delay: 1.5s; }
+.counter-item:nth-child(5) { animation-delay: 2s; }
+.counter-item:nth-child(6) { animation-delay: 2.5s; }
+.counter-item:nth-child(7) { animation-delay: 3s; }
+.counter-item:nth-child(8) { animation-delay: 3.5s; }
 
 @keyframes counterFloat {
     0%, 100% { transform: translateY(0); }
@@ -369,7 +408,7 @@ section {
 }
 
 .counter-number {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 10px;
     background: linear-gradient(45deg, #fff, #ffcccb);
@@ -379,8 +418,9 @@ section {
 }
 
 .counter-label {
-    font-size: 1.1rem;
+    font-size: 1rem;
     opacity: 0.9;
+    font-weight: 500;
 }
 
 /* Love Reasons */
@@ -615,8 +655,23 @@ section {
     .gallery-grid {
         grid-template-columns: 1fr;
     }
+      .counter-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
     
-    .counter-grid,
+    .counter-item {
+        padding: 20px;
+    }
+    
+    .counter-number {
+        font-size: 2rem;
+    }
+    
+    .counter-label {
+        font-size: 0.9rem;
+    }
+    
     .reasons-grid {
         grid-template-columns: 1fr;
     }

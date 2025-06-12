@@ -1,9 +1,47 @@
-// Photo gallery data
+// Background Music Auto-play
+function initAutoPlayMusic() {
+    const audioElement = document.getElementById('backgroundMusic');
+    
+    if (audioElement) {
+        // Configurar volume para 30%
+        audioElement.volume = 0.3;
+        
+        // Função para tentar tocar a música
+        const tryPlay = () => {
+            audioElement.play().catch((error) => {
+                console.log('Autoplay bloqueado pelo navegador, tentando no primeiro clique:', error);
+                // Se autoplay falhar, tentar no primeiro clique/toque do usuário
+                document.addEventListener('click', () => {
+                    audioElement.play().catch(e => console.log('Erro ao reproduzir áudio:', e));
+                }, { once: true });
+                
+                document.addEventListener('touchstart', () => {
+                    audioElement.play().catch(e => console.log('Erro ao reproduzir áudio:', e));
+                }, { once: true });
+            });
+        };
+        
+        // Tentar tocar imediatamente
+        tryPlay();
+        
+        // Também tentar quando o áudio estiver carregado
+        audioElement.addEventListener('canplaythrough', tryPlay);
+    }
+}
+
+// Photo gallery data - ALL photos from base directory
 const photos = [
     '20250606_141020.jpg',
     '20250606_214326.jpg',
     '20250608_001400.jpg',
     '20250608_001829.jpg',
+    'IMG_20241026_214842.jpg',
+    'IMG_20250112_021742.jpg',
+    'IMG_20250222_121206.jpg',
+    'IMG_20250301_180902.jpg',
+    'IMG_20250304_232144.jpg',
+    'IMG_20250308_205612.jpg',
+    'IMG_20250317_232152.jpg',
     'IMG_20250322_191648.jpg',
     'IMG_20250322_215728.jpg',
     'IMG_20250421_203227.jpg',
@@ -13,6 +51,25 @@ const photos = [
     'IMG_20250517_201225.jpg',
     'IMG_20250524_231925.jpg',
     'IMG_20250524_232303.jpg'
+];
+
+// Beijos gallery data - Special romantic moments
+const beijosPhotos = [
+    'beijos/20250606_214205.jpg',
+    'beijos/IMG_20241006_173816.jpg',
+    'beijos/IMG_20241012_211529.jpg',
+    'beijos/IMG_20241118_222709.jpg',
+    'beijos/IMG_20241214_231415.jpg',
+    'beijos/IMG_20241219_225416.jpg',
+    'beijos/IMG_20241231_233807.jpg',
+    'beijos/IMG_20250125_213221.jpg',
+    'beijos/IMG_20250304_232152.jpg',
+    'beijos/IMG_20250317_232100.jpg',
+    'beijos/IMG_20250322_220811.jpg',
+    'beijos/IMG_20250425_215051.jpg',
+    'beijos/IMG_20250502_221706.jpg',
+    'beijos/IMG_20250524_232254.jpg',
+    'beijos/IMG_20240613_012633.jpg'
 ];
 
 // Romantic captions for photos
@@ -29,12 +86,25 @@ const photoCaptions = [
     "Nossos momentos únicos 🥰",
     "Para sempre em meu coração ❤️",
     "Você é minha alma gêmea 👫",
-    "Amor verdadeiro e eterno 💖"
+    "Amor verdadeiro e eterno 💖",
+    "Cada foto uma memória especial 💝",
+    "Nossos dias são mais belos juntos 🌸",
+    "Você ilumina minha vida 🌟",
+    "Momento perfeito capturado 📸",
+    "Felicidade em estado puro 😊",
+    "Nosso amor crescendo a cada dia 🌱",
+    "Eternizando nossa felicidade 💫"
+];
+
+// Romantic captions for beijos photos
+const beijosCaptions = [
 ];
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
+    initAutoPlayMusic();
     loadPhotoGallery();
+    loadBeijosGallery();
     initializeLoveCounter();
     initializeInteractiveElements();
     startHeartAnimation();
@@ -58,19 +128,42 @@ function loadPhotoGallery() {
         `;
         
         // Add click event to open modal
-        photoItem.addEventListener('click', () => openPhotoModal(photo, index));
+        photoItem.addEventListener('click', () => openPhotoModal(photo, index, photoCaptions));
+        
+        gallery.appendChild(photoItem);
+    });
+}
+
+// Load beijos gallery
+function loadBeijosGallery() {
+    const gallery = document.getElementById('beijosGallery');
+    
+    beijosPhotos.forEach((photo, index) => {
+        const photoItem = document.createElement('div');
+        photoItem.className = 'photo-item beijos-item';
+        photoItem.style.animationDelay = `${index * 0.1}s`;
+        
+        photoItem.innerHTML = `
+            <img src="${photo}" alt="Momento íntimo ${index + 1}" loading="lazy">
+            <div class="photo-overlay beijos-overlay">
+                <div class="photo-hearts">💋</div>
+            </div>
+        `;
+        
+        // Add click event to open modal
+        photoItem.addEventListener('click', () => openPhotoModal(photo, index, beijosCaptions));
         
         gallery.appendChild(photoItem);
     });
 }
 
 // Open photo modal
-function openPhotoModal(photoSrc, index) {
+function openPhotoModal(photoSrc, index, captions) {
     const modal = document.getElementById('photoModal');
     const modalImage = document.getElementById('modalImage');
     
     modalImage.src = photoSrc;
-    modalImage.alt = photoCaptions[index];
+    modalImage.alt = captions[index];
     modal.style.display = 'block';
     
     // Add heart animation to modal
@@ -117,10 +210,13 @@ function initializeLoveCounter() {
     const startDate = new Date('2024-06-09');
     const currentDate = new Date();
     const daysTogether = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
-    
-    // Animate counters
-    animateCounter('daysCounter', 0, Math.max(daysTogether, 1), 2000);
-    animateCounter('heartbeats', 0, 1000000, 3000);
+      // Animate counters
+    animateCounter('daysCounter', 0, Math.max(daysTogether, 1), 2500);
+    animateCounter('whatsappMessages', 0, 67227, 3500);
+    animateCounter('spotifyLinks', 0, 52, 4500);
+    animateCounter('academiaConversas', 0, 837, 5500);
+    animateCounter('teAmos', 0, 358, 6500);
+    animateCounter('numeroEspecial', 0, 80, 7500);
 }
 
 // Animate counter numbers
@@ -206,12 +302,11 @@ function playHeartAnimation(button) {
 function showLoveMessage() {
     const messages = [
         "💕 Eu te amo, Maria Margareth! 💕",
-        "💖 Você é meu mundo! 💖",
-        "💗 Para sempre juntos! 💗",
-        "💝 Você é minha vida! 💝",
-        "❤️ Meu amor eterno! ❤️",
+        "💖 Minha Capitã! 💖",
+        "💗 Minha musa! 💗",
+        "💝 Minha deusa! 💝",
         "😍 Você é perfeita! 😍",
-        "🥰 Minha alma gêmea! 🥰",
+        "🥰 Meu leite! 🥰",
         "💘 Te amo mais que tudo! 💘"
     ];
     
